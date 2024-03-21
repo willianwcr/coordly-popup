@@ -65,14 +65,14 @@ function eraseCookie(name) {
                           <ul>
                           </ul>
                       </div>
-                      <a href="#" class="btn primary icon" data-pagination="next" id="modal__next__button">
+                      <span class="btn primary icon" data-pagination="next" id="modal__next__button">
                           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path d="M11.7633 7.60001L9.04999 4.88668C8.82999 4.66668 8.46999 4.66668 8.24999 4.88668C8.02999 5.10668 8.02999 5.46668 8.24999 5.68668L9.99666 7.43335H4.63666C4.32333 7.43335 4.06999 7.68668 4.06999 8.00001C4.06999 8.31335 4.32333 8.56668 4.63666 8.56668H9.99666L8.24999 10.3133C8.02999 10.5333 8.02999 10.8933 8.24999 11.1133C8.35999 11.2233 8.50666 11.28 8.64999 11.28C8.79333 11.28 8.93999 11.2233 9.04999 11.1133L11.7633 8.40001C11.9833 8.18001 11.9833 7.82001 11.7633 7.60001Z" fill="white"/>
                           </svg>
-                      </a>
-                      <a href="#" class="btn primary" data-modal="close" style="display: none">
+                      </span>
+                      <span class="btn primary" data-modal="close" style="display: none">
                           Fechar
-                      </a>
+                      </span>
                   </div>
               </div>
           `;
