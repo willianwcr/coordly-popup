@@ -1,31 +1,9 @@
 function el(id) {
     return document.getElementById(id);
-  }
-
-  function setCookie(name,value,days) {
-    var expires = "";
-    if (days) {
-        var date = new Date();
-        date.setTime(date.getTime() + (days*24*60*60*1000));
-        expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "")  + expires + "; path=/";
-}
-function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-function eraseCookie(name) {   
-    document.cookie = name +'=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
   
-  async function createModal(data) {
+async function createModal(data, id) {
+    if(sessionStorage.getItem('newspopup_close_'+id)) return;
       function insertCss(){
           const css = `@import url(https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap);.modal,.modal__container{position:fixed;z-index:9999}.modal,.modal__container,.modal__pages{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.4s}.modal__body h1,.modal__body p{font-family:"Open Sans";font-style:normal}.btn,.modal{font-family:"Open Sans",sans-serif}.modal__body h1,.modal__body p,.pagination ul,body{padding:0;margin:0}.modal__container{top:0;left:0;display:flex;width:100vw;height:100vh;justify-content:center;align-items:center;background-color:rgba(0,0,0,.5)}.modal{max-width:400px;width:100%;overflow:hidden;border-radius:16px;border:1px solid #eaedf0;background:#fff}.modal__pages__container{overflow-x:hidden}.modal__pages{display:flex;width:calc(400* 2px);overflow-y:visible}.btn,.pagination ul li{transition-property:all;transition-timing-function:cubic-bezier(.4,0,.2,1);transition-duration:.15s}.modal__page{width:400px; min-width: 400px;}.modal__body{padding:24px 24px 12px;display:flex;gap:16px;flex-direction:column}.modal__body h1{color:#324150;font-size:16px;font-weight:600;line-height:24px}.modal__body p{color:#8697a8;font-size:14px;font-weight:400;line-height:20px}.modal__body .details{display:flex;gap:12px;flex-direction:column;align-items:flex-start}.modal__footer{padding:0 24px 24px 60px;display:flex}.btn,.tag{display:inline-block;color:#fff;text-decoration:none;text-align:center;box-sizing:border-box;font-style:normal}.btn{padding:10px 16px;border-radius:5px;background-color:#000;height:36px;font-size:12px;font-weight:600;line-height:16px}.btn.icon{padding:10px}.btn.primary{background:#3547c8;color:#fff}.btn.primary:hover{background:#4e5dcf}.btn.primary:active{background:#6573d5}.btn.secondary{background:#eaedf0;color:#324150}.btn.secondary:hover{background:#d4d8dd}.btn.secondary:active{background:#bec4ca}.tag{padding:4px 12px;border-radius:12px;background-color:#3547c8;height:24px;width:fit-content;font-size:10px;font-weight:700;line-height:normal;text-transform:uppercase}.tag.primary-alt{background:rgba(53,71,200,.16);color:#3547c8}.pagination{display:flex;justify-content:center;align-items:center;flex-grow:1}.pagination ul{display:flex;list-style:none}.pagination ul li{margin:0 4px;width:8px;height:8px;background-color:#bec2c6;border-radius:4px;cursor:pointer}.pagination ul li:hover{background-color:#adb2b8}.pagination ul li.active{background-color:#3547c8;width:24px}`;
           const style = document.createElement('style');
@@ -40,6 +18,7 @@ function eraseCookie(name) {
           modal.style.display = 'none';
           modal.style.opacity = '0';
           modal.innerHTML = `
+              <div class="close_modal_backdrop" style="position: absolute; width: 100vw; height: 100vh; top: 0; left: 0; z-index: 9998;"></div>
               <div class="modal">
                   <div class="modal__pages__container">
                       <div class="modal__pages">
@@ -101,8 +80,8 @@ function eraseCookie(name) {
           }
       }
   
-      function hideModal(obj) {
-          setCookie('newspopup_close', 'true', 7)
+      function hideModal(obj, id) {
+          sessionStorage.setItem('newspopup_close_'+id, 'true');
           obj.style.opacity = '0';
           setTimeout(function() {
               obj.remove();
@@ -130,7 +109,11 @@ function eraseCookie(name) {
       });
   
       modal.querySelector('[data-modal="close"]').addEventListener('click', function() {
-          hideModal(modal);
+          hideModal(modal, id);
+      });
+
+      modal.querySelector('.close_modal_backdrop').addEventListener('click', function() {
+          hideModal(modal, id);
       });
   
       modal.querySelectorAll('.pagination li').forEach(function(li, index) {
