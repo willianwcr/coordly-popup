@@ -9,6 +9,11 @@ var PopupCoordly_tid = setInterval( function () {
         script.type="text/javascript";
         script.async =true;
         script.defer =true;
+        script.addEventListener('load', function() {
+            window.dataLayer.push({
+                event: 'popupJsLoaded'
+            });
+        });
         document.body.appendChild(script);
     }
 }, 100 );
