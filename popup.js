@@ -25,7 +25,7 @@ async function createModal(data, id) {
                           ${data.pages.map(page => `
                               <div class="modal__page">
                                   <div class="modal__header">
-                                      <img src="${page.headerImage}">
+                                      <img style="width: 100%;" src="${page.headerImage}">
                                   </div>
                                   <div class="modal__body">
                                       <span class="tag primary-alt">${page.tag}</span>
