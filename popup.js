@@ -30,9 +30,9 @@ async function createModal(data, id) {
                                   <div class="modal__body">
                                       <span class="tag primary-alt">${page.tag}</span>
                                       <div class="details">
-                                          <h1 class="title">${page.title}</h1>
-                                          <p>${page.description}</p>
-                                          <a href="${page.button.link}" class="btn secondary">${page.button.text}</a>
+                                          ${page.title ? `<h1>${page.title}</h1>` : ''}
+                                          ${page.description ? `<p>${page.description}</p>` : ''}
+                                          ${page.button ? `<a href="${page.button.link ? page.button.link : '#'}" class="btn secondary">${page.button.text}</a>` : ''}
                                       </div>
                                   </div>
                               </div>
